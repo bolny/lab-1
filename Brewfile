@@ -1,4 +1,5 @@
-brew "clang-format"
+brew "cglm"
 brew "glfw"
 brew "molten-vk"
 brew "vulkan-headers"
+brew "vulkan-loader"

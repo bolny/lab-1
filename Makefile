@@ -1,14 +1,15 @@
 CC = cc
-# These library locations probably won't work on an ARM Mac so probably figure this out
-CFLAGS = -Wall -Wextra -std=c99 -I/usr/local/include -L/usr/local/lib -lglfw -lvulkan
+CFLAGS = -Wall -Wextra -std=c99 \
+				 -I/opt/homebrew/include \
+				 -L/opt/homebrew/lib \
+				 -lglfw \
+				 -lMoltenVK \
+				 -lvulkan \
 
 all: lab
 
-lab: main.c
-	$(CC) main.c $(CFLAGS) -o lab
-
-run: lab
-	./lab
+lab: src/main.c
+	$(CC) src/main.c $(CFLAGS) -o bin/lab
 
 clean:
-	rm -f *.o lab
+	rm -f tmp/* bin/*

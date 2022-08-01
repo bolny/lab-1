@@ -13,9 +13,11 @@ export VK_LAYER_PATH="share/vulkan/explicit_layer.d"
 all: lab
 
 lab: src/main.c
+	mkdir -p bin
 	$(CC) src/main.c $(CFLAGS) -o bin/lab
 
 debug: src/main.c
+	mkdir -p bin
 	$(CC) -g  src/main.c $(CFLAGS) -o bin/lab
 
 clean:

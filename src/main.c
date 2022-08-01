@@ -65,30 +65,29 @@ bool createInstance(VkInstance *instance) {
   return true;
 }
 
-bool pickPhysicalDevice(VkInstance *instance) {
-  // Just choosing the first available GPU, since I know it is suitable on my
-  // machine.
-  VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+bool pickPhysicalDevice(VkInstance *instance, VkPhysicalDevice *physicalDevice) {
   uint32_t deviceCount = 0;
   vkEnumeratePhysicalDevices(*instance, &deviceCount, NULL);
   if (deviceCount == 0) {
     return false;
   }
-  VkPhysicalDevice deviceInfo = VK_NULL_HANDLE;
-  vkEnumeratePhysicalDevices(*instance, &deviceCount, &deviceInfo);
+  VkPhysicalDevice *devices = malloc(deviceCount * sizeof(VkPhysicalDevice));
+  vkEnumeratePhysicalDevices(*instance, &deviceCount, devices);
 
-  //physicalDevice = deviceInfo[0];
+  // Just choosing the first available GPU, since I know it is suitable on my
+  // machine.
+  physicalDevice = &devices[0];
 
   // Check device properties.
-  //VkPhysicalDeviceProperties deviceProperties;
-  //vkGetPhysicalDeviceProperties(physicalDevice, &deviceProperties);
-  //VkPhysicalDeviceFeatures deviceFeatures;
-  //vkGetPhysicalDeviceFeatures(physicalDevice, &deviceFeatures);
+  VkPhysicalDeviceProperties deviceProperties;
+  vkGetPhysicalDeviceProperties(*physicalDevice, &deviceProperties);
+  VkPhysicalDeviceFeatures deviceFeatures;
+  vkGetPhysicalDeviceFeatures(*physicalDevice, &deviceFeatures);
 
-  // Get the device instruction queue.
+  // In reality I'd have some algorithm to choose the ideal device, but since I
+  // only have the one, it's fine.
 
-  // 
-
+  free(devices);
   return true;
 }
 
@@ -144,7 +143,8 @@ int main() {
 
   // Select Vulkan GPU
   printf("Getting GPU.\n");
-  if (!pickPhysicalDevice(&instance)) {
+  VkPhysicalDevice physicalDevice = VK_NULL_HANDLE;
+  if (!pickPhysicalDevice(&instance, &physicalDevice)) {
     fprintf(stderr, "Did not find a suitable GPU!\n");
     vkDestroyInstance(instance, NULL);
     glfwDestroyWindow(window);

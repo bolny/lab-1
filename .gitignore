@@ -1,5 +1,4 @@
 *tags*
 *.swp
-Brewfile.lock.json
-bin/*
-.vscode
+bin
+*.o

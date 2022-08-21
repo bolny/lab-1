@@ -1,0 +1,10 @@
+BasedOnStyle: None
+AlignTrailingComments: true
+BreakBeforeBraces: Allman
+ColumnLimit: 80
+IndentWidth: 2
+KeepEmptyLinesAtTheStartOfBlocks: false
+PointerBindsToType: true
+SpacesBeforeTrailingComments: 2
+TabWidth: 2
+UseTab: Never
